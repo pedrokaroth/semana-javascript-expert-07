@@ -2,16 +2,16 @@ export default class CardsController {
   #itemsPerLine = 5
   #view
   #service
-  constructor({ view, service }) {
+  constructor ({ view, service }) {
     this.#view = view
     this.#service = service
   }
 
-  async #loadDB() {
+  async #loadDB () {
     return this.#service.loadCards()
   }
 
-  addCards(keyword) {
+  addCards (keyword) {
     const cards = this.#service.filterTitles(keyword)
     const totalCards = cards.length
 
@@ -23,7 +23,7 @@ export default class CardsController {
     this.#view.addCards(cards, this.#itemsPerLine)
   }
 
-  #onSearchInput(keyword) {
+  #onSearchInput (keyword) {
     this.#view.clearCards()
 
     console.log('activating blocking operation...')
@@ -37,16 +37,16 @@ export default class CardsController {
     this.addCards(keyword)
   }
 
-  async init() {
+  async init () {
     await this.#loadDB()
     this.#view.configureOnSearchInput(
       this.#onSearchInput.bind(this)
     )
 
-    this.addCards("")
+    this.addCards('')
   }
 
-  static async initialize(deps) {
+  static async initialize (deps) {
     const controller = new CardsController(deps)
     return controller.init()
   }

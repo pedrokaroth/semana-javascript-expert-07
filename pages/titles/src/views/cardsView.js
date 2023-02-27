@@ -4,11 +4,11 @@ export default class CardsView {
   #inputSearch = document.getElementById('inputSearch')
   #searchTitleBar = document.getElementById('searchTitleBar')
 
-  clearCards() {
+  clearCards () {
     Array.from(this.#browseSearchList.children).forEach(c => c.remove())
   }
 
-  configureOnSearchInput(fn) {
+  configureOnSearchInput (fn) {
     this.#inputSearch.value = ''
     this.#inputSearch.addEventListener('input', (event) => {
       const target = event.target
@@ -19,11 +19,11 @@ export default class CardsView {
     })
   }
 
-  updateSearchTitleBarTotal(total) {
+  updateSearchTitleBarTotal (total) {
     this.#searchTitleBar.innerText = `BROWSE SEARCH (${total})`
   }
 
-  addCards(cards, itemsPerLine) {
+  addCards (cards, itemsPerLine) {
     window.AddCardsOnBrowseSearchGrid({
       cards,
       itemsPerLine
@@ -31,5 +31,4 @@ export default class CardsView {
 
     this.updateSearchTitleBarTotal(cards.length)
   }
-
 }
