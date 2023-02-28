@@ -13,6 +13,5 @@ export default class Controller {
   }
 
   async init () {
-    console.log('nehaneh')
   }
 }
