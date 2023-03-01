@@ -22,7 +22,11 @@ export default class Camera {
     camera.video.height = 240
     camera.video.width = 320
 
-    document.body.append(camera.video)
+    const videoElement = document.getElementById('video')
+
+    if (false) {
+      videoElement.append(camera.video)
+    }
 
     await new Promise((resolve) => {
       camera.video.onloadedmetadata = () => {

@@ -14,6 +14,34 @@ function supportsWorkerType () {
   }
 }
 
+function date () {
+  const date = new Date()
+  return date.toLocaleString('pt-BR', {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    fractionalSecondDigits: 3
+  })
+}
+
+function prepareRunChecker ({ timerDelay }) {
+  let lastEvent = Date.now()
+  return {
+    shoudRun () {
+      const result = (Date.now() - lastEvent) > timerDelay
+
+      if (result) {
+        lastEvent = Date.now()
+      }
+
+      return result
+    }
+  }
+}
+
 export {
-  supportsWorkerType
+  supportsWorkerType,
+  date,
+  prepareRunChecker
 }
