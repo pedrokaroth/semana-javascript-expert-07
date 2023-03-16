@@ -159,29 +159,28 @@ const ResizeHeader = () => {
   if (width <= 815) {
     if (document.getElementsByClassName('hamburger').length <= 0) {
       const header = document.getElementsByClassName('header')[0]
-      const main_nav = header.getElementsByClassName('main-nav')[0]
-      const right_nav = header.getElementsByClassName('right-nav')[0]
+      const mainNav = header.getElementsByClassName('main-nav')[0]
+      const rightNav = header.getElementsByClassName('right-nav')[0]
 
       const hamburger = document.createElement('div')
       hamburger.classList.add('hamburger')
-      hamburger.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-</svg>`
-      main_nav.remove()
-      right_nav.remove()
+      hamburger.innerHTML = '<svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>'
 
-      const bottom_header = document.createElement('div')
-      bottom_header.classList.add('header-bottom')
-      bottom_header.append(main_nav, right_nav)
-      bottom_header.style.display = 'none'
+      mainNav.remove()
+      rightNav.remove()
+
+      const bottomHeader = document.createElement('div')
+      bottomHeader.classList.add('header-bottom')
+      bottomHeader.append(mainNav, rightNav)
+      bottomHeader.style.display = 'none'
 
       hamburger.addEventListener('click', function () {
-        if (bottom_header.style.display == 'none') {
-          bottom_header.style.display = 'flex'
+        if (bottomHeader.style.display === 'none') {
+          bottomHeader.style.display = 'flex'
           header.style.paddingBottom = '9px'
           header.style.paddingTop = '9px'
         } else {
-          bottom_header.style.display = 'none'
+          bottomHeader.style.display = 'none'
           header.style.paddingBottom = '0px'
           header.style.paddingTop = '0px'
         }
@@ -189,89 +188,89 @@ const ResizeHeader = () => {
 
       header.classList.add('header-change')
 
-      const top_header = document.createElement('div')
-      top_header.classList.add('header-top')
-      top_header.append(header.children[0], hamburger)
+      const topHeader = document.createElement('div')
+      topHeader.classList.add('header-top')
+      topHeader.append(header.children[0], hamburger)
 
       header.innerHTML = ''
-      header.append(top_header, bottom_header)
+      header.append(topHeader, bottomHeader)
     }
   } else {
     if (document.getElementsByClassName('hamburger').length > 0) {
       const header = document.getElementsByClassName('header')[0]
-      const main_nav = header.getElementsByClassName('main-nav')[0]
-      const right_nav = header.getElementsByClassName('right-nav')[0]
+      const mainNav = header.getElementsByClassName('main-nav')[0]
+      const rightNav = header.getElementsByClassName('right-nav')[0]
       const brand = header.getElementsByClassName('brand')[0]
 
       header.classList.remove('header-change')
       header.children[0].remove()
       header.children[0].remove()
-      header.append(brand, main_nav, right_nav)
+      header.append(brand, mainNav, rightNav)
     }
   }
 }
 
 const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
-  const carousel_width = carousels[0]
+  const carouselWidth = carousels[0]
     .clientWidth
 
-  const btn_width =
+  const btnWidth =
     document.getElementsByClassName('carousel-btn')[0].clientWidth +
     document.getElementsByClassName('carousel-btn')[1].clientWidth
 
-  const num_cards = NUM_CARDS.default
-  const card_margin = 2
-  const initial_width = 1920
-  const initial_height = 1080
+  const numCards = NUM_CARDS.default
+  const cardMargin = 2
+  const initialWidth = 1920
+  const initialHeight = 1080
 
   const scale =
-    (100 * ((carousel_width - btn_width) / num_cards - card_margin * 2)) /
-    initial_width
+    (100 * ((carouselWidth - btnWidth) / numCards - cardMargin * 2)) /
+    initialWidth
 
-  const content_titles = document.getElementsByClassName('content-title')
+  const contentTitles = document.getElementsByClassName('content-title')
 
-  for (let i = 0; i < content_titles.length; i++) {
-    content_titles[i].style.marginLeft = `${card_margin}px`
+  for (let i = 0; i < contentTitles.length; i++) {
+    contentTitles[i].style.marginLeft = `${cardMargin}px`
   }
 
   // let carousels = document.getElementsByClassName("card-carousel")
   for (let i = 0; i < carousels.length; i++) {
-    const not_chosen = []
+    const notChosen = []
 
     for (let c = 0; c < cards.length; c++) {
-      not_chosen.push(c)
+      notChosen.push(c)
     }
 
     for (let j = 0; j < cards.length; j++) {
-      const chosen_index = Math.floor(Math.random() * not_chosen.length)
+      const chosenIndex = Math.floor(Math.random() * notChosen.length)
 
-      const chosen_card = cards[not_chosen[chosen_index]]
+      const chosenCard = cards[notChosen[chosenIndex]]
 
-      not_chosen.splice(chosen_index, 1)
+      notChosen.splice(chosenIndex, 1)
 
       const card = document.createElement('div')
       card.classList.add('card')
-      card.style.backgroundImage = `url(${chosen_card.background})`
+      card.style.backgroundImage = `url(${chosenCard.background})`
 
       // If image doesn't load
       card.style.backgroundColor = '#333'
 
-      card.style.width = initial_width * (scale / 100) + 'px'
-      card.style.height = initial_height * (scale / 100) + 'px'
-      card.style.margin = `0px ${card_margin}px`
-      card.style.minWidth = initial_width * (scale / 100) + 'px'
-      card.style.minHeight = initial_height * (scale / 100) + 'px'
+      card.style.width = initialWidth * (scale / 100) + 'px'
+      card.style.height = initialHeight * (scale / 100) + 'px'
+      card.style.margin = `0px ${cardMargin}px`
+      card.style.minWidth = initialWidth * (scale / 100) + 'px'
+      card.style.minHeight = initialHeight * (scale / 100) + 'px'
 
       const overlay = document.createElement('div')
       overlay.classList.add('overlay')
 
       const title = document.createElement('h4')
-      title.innerText = chosen_card.title
+      title.innerText = chosenCard.title
       const description = document.createElement('p')
       description.innerText = '1h 22min'
 
-      const button_container = document.createElement('div')
-      button_container.classList.add('button-container')
+      const buttonContainer = document.createElement('div')
+      buttonContainer.classList.add('button-container')
 
       const button1 = document.createElement('div')
       button1.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
@@ -289,7 +288,7 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
       button2.classList.add('queue')
 
       button2.addEventListener('click', function () {
-        ToggleWatchLater(`${chosen_card.title}`)
+        ToggleWatchLater(`${chosenCard.title}`)
       })
 
       const button3 = document.createElement('div')
@@ -300,7 +299,7 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
       button3.classList.add('queue')
 
       button3.addEventListener('click', function () {
-        if (button3.children[0].style.color != 'rgb(255, 255, 87)') {
+        if (button3.children[0].style.color !== 'rgb(255, 255, 87)') {
           button3.children[0].style.color = 'rgb(255, 255, 87)'
         } else {
           button3.children[0].style.color = 'white'
@@ -323,43 +322,43 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
           const modal = document.createElement('div')
           modal.classList.add('movie-desc')
 
-          const modal_content = document.createElement('div')
-          modal_content.classList.add('modal-content')
+          const modalContent = document.createElement('div')
+          modalContent.classList.add('modal-content')
 
-          const bg_image = document.createElement('div')
-          bg_image.classList.add('desc-image')
-          bg_image.style.backgroundImage = `url(${chosen_card.background})`
-          const image_cover = document.createElement('div')
+          const bgImage = document.createElement('div')
+          bgImage.classList.add('desc-image')
+          bgImage.style.backgroundImage = `url(${chosenCard.background})`
+          const imageCover = document.createElement('div')
 
-          const close_btn = document.createElement('div')
-          close_btn.classList.add('close-btn')
-          close_btn.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
+          const closeBtn = document.createElement('div')
+          closeBtn.classList.add('close-btn')
+          closeBtn.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 </svg>`
 
-          close_btn.addEventListener('click', function () {
+          closeBtn.addEventListener('click', function () {
             this.parentElement.parentElement.parentElement.parentElement.remove()
           })
 
-          image_cover.append(close_btn)
-          bg_image.append(image_cover)
+          imageCover.append(closeBtn)
+          bgImage.append(imageCover)
 
-          const top_info = document.createElement('div')
-          top_info.classList.add('desc-top')
+          const topInfo = document.createElement('div')
+          topInfo.classList.add('desc-top')
           const title = document.createElement('h1')
-          title.innerText = chosen_card.title
+          title.innerText = chosenCard.title
 
-          const btn_selection = document.createElement('div')
-          btn_selection.classList.add('button-selection')
-          btn_selection.innerHTML = `
-                        <div class="watch" onclick="PlayVideo('${chosen_card.show_id}');">
+          const btnSelection = document.createElement('div')
+          btnSelection.classList.add('button-selection')
+          btnSelection.innerHTML = `
+                        <div class="watch" onclick="PlayVideo('${chosenCard.show_id}');">
                             <h3>Play</h3>
                             <svg fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                 <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
                             </svg>
                         </div>
-                        <div class="queue" onclick="ToggleWatchLater('${chosen_card.title}');">
+                        <div class="queue" onclick="ToggleWatchLater('${chosenCard.title}');">
                             <h3>Watch Later</h3>
                             <svg fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -367,27 +366,27 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
                             </svg>
                         </div>`
 
-          top_info.append(title, btn_selection)
+          topInfo.append(title, btnSelection)
 
-          const mid_info = document.createElement('div')
-          mid_info.classList.add('desc-mid')
-          mid_info.innerHTML = `<p>${chosen_card.description}</p>`
+          const midInfo = document.createElement('div')
+          midInfo.classList.add('desc-mid')
+          midInfo.innerHTML = `<p>${chosenCard.description}</p>`
 
-          const bottom_info = document.createElement('div')
-          bottom_info.classList.add('desc-bottom')
+          const bottonInfo = document.createElement('div')
+          bottonInfo.classList.add('desc-bottom')
 
-          const cast_slider = document.createElement('div')
-          cast_slider.classList.add('cast')
+          const castSlider = document.createElement('div')
+          castSlider.classList.add('cast')
 
-          bottom_info.append(cast_slider)
+          bottonInfo.append(castSlider)
 
-          modal_content.append(
-            bg_image,
-            top_info,
-            mid_info,
-            bottom_info
+          modalContent.append(
+            bgImage,
+            topInfo,
+            midInfo,
+            bottonInfo
           )
-          modal.append(modal_content)
+          modal.append(modalContent)
 
           document.body.append(modal)
 
@@ -398,33 +397,33 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
           })
 
           // Set the height for the modal image
-          const total_width = document.getElementsByClassName(
+          const totalWidth = document.getElementsByClassName(
             'modal-content'
           )[0].clientWidth
-          const large_scale = (100 * total_width) / 1920
+          const largeScale = (100 * totalWidth) / 1920
           document.getElementsByClassName(
             'desc-image'
-          )[0].style.height = `${1080 * (large_scale / 100)}px`
+          )[0].style.height = `${1080 * (largeScale / 100)}px`
 
           // Set image for cast
           for (let c = 0; c < cast.length; c++) {
-            const cast_block = document.createElement('div')
-            cast_block.classList.add('cast-card')
-            cast_block.style.backgroundImage = `url("${cast[c].picture}")`
-            cast_block.style.width = 100 / cast.length - 5 + '%'
-            cast_block.style.height = `calc(${document.getElementsByClassName('cast')[0]
+            const castBlock = document.createElement('div')
+            castBlock.classList.add('cast-card')
+            castBlock.style.backgroundImage = `url("${cast[c].picture}")`
+            castBlock.style.width = 100 / cast.length - 5 + '%'
+            castBlock.style.height = `calc(${document.getElementsByClassName('cast')[0]
               .clientWidth / cast.length
               }"px" - 5%)`
-            cast_slider.append(cast_block)
+            castSlider.append(castBlock)
           }
         }
       })
 
-      button_container.append(button1, button2, button3, button4)
+      buttonContainer.append(button1, button2, button3, button4)
 
-      overlay.append(title, description, button_container)
+      overlay.append(title, description, buttonContainer)
       card.append(overlay)
-      if (j < num_cards) {
+      if (j < numCards) {
         carousels[i].insertBefore(
           card,
           carousels[i].children[carousels[i].children.length - 1]
@@ -453,56 +452,56 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
     carousels.push(carousel)
   }
 
-  const carousel_width = carousels[0].clientWidth
-  const btn_width = 0
+  const carouselWidth = carousels[0].clientWidth
+  const btnWidth = 0
 
-  const card_margin = 2
-  const initial_width = 1920
-  const initial_height = 1080
+  const cardMargin = 2
+  const initialWidth = 1920
+  const initialHeight = 1080
 
   const scale =
-    (100 * ((carousel_width - btn_width) / itemsPerLine - card_margin * 2)) /
-    initial_width
+    (100 * ((carouselWidth - btnWidth) / itemsPerLine - cardMargin * 2)) /
+    initialWidth
 
-  const content_titles = browseSearchDiv.getElementsByClassName('content-title')
+  const contentTitles = browseSearchDiv.getElementsByClassName('content-title')
 
-  for (let i = 0; i < content_titles.length; i++) {
-    content_titles[i].style.marginLeft = `${card_margin}px`
+  for (let i = 0; i < contentTitles.length; i++) {
+    contentTitles[i].style.marginLeft = `${cardMargin}px`
   }
 
   for (let i = 0; i < carousels.length; i++) {
     const actualCards = cardsCopy.splice(0, itemsPerLine)
-    for (const chosen_card of actualCards) {
+    for (const chosenCard of actualCards) {
       const card = document.createElement('div')
       card.classList.add('card')
-      card.style.backgroundImage = `url(${chosen_card.background})`
+      card.style.backgroundImage = `url(${chosenCard.background})`
 
       // If image doesn't load
       card.style.backgroundColor = '#333'
 
-      card.style.width = initial_width * (scale / 100) + 'px'
-      card.style.height = initial_height * (scale / 100) + 'px'
-      card.style.margin = `0px ${card_margin}px`
-      card.style.minWidth = initial_width * (scale / 100) + 'px'
-      card.style.minHeight = initial_height * (scale / 100) + 'px'
+      card.style.width = initialWidth * (scale / 100) + 'px'
+      card.style.height = initialHeight * (scale / 100) + 'px'
+      card.style.margin = `0px ${cardMargin}px`
+      card.style.minWidth = initialWidth * (scale / 100) + 'px'
+      card.style.minHeight = initialHeight * (scale / 100) + 'px'
 
       const overlay = document.createElement('div')
       overlay.classList.add('overlay')
 
       const title = document.createElement('h4')
-      title.innerText = chosen_card.title
+      title.innerText = chosenCard.title
       const description = document.createElement('p')
-      description.innerText = chosen_card.duration
+      description.innerText = chosenCard.duration
 
-      const button_container = document.createElement('div')
-      button_container.classList.add('button-container')
+      const buttonContainer = document.createElement('div')
+      buttonContainer.classList.add('button-container')
 
       const button1 = document.createElement('div')
       button1.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
   <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
 </svg>`
       button1.classList.add('watch')
-      button1.addEventListener('click', function () { PlayVideo(chosen_card.show_id) })
+      button1.addEventListener('click', function () { PlayVideo(chosenCard.show_id) })
 
       const button2 = document.createElement('div')
       button2.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
@@ -512,7 +511,7 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
       button2.classList.add('queue')
 
       button2.addEventListener('click', function () {
-        ToggleWatchLater(`${chosen_card.title}`)
+        ToggleWatchLater(`${chosenCard.title}`)
       })
 
       const button3 = document.createElement('div')
@@ -523,7 +522,7 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
       button3.classList.add('queue')
 
       button3.addEventListener('click', function () {
-        if (button3.children[0].style.color != 'rgb(255, 255, 87)') {
+        if (button3.children[0].style.color !== 'rgb(255, 255, 87)') {
           button3.children[0].style.color = 'rgb(255, 255, 87)'
         } else {
           button3.children[0].style.color = 'white'
@@ -546,43 +545,43 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
           const modal = document.createElement('div')
           modal.classList.add('movie-desc')
 
-          const modal_content = document.createElement('div')
-          modal_content.classList.add('modal-content')
+          const modalContent = document.createElement('div')
+          modalContent.classList.add('modal-content')
 
-          const bg_image = document.createElement('div')
-          bg_image.classList.add('desc-image')
-          bg_image.style.backgroundImage = `url(${chosen_card.background})`
-          const image_cover = document.createElement('div')
+          const bgImage = document.createElement('div')
+          bgImage.classList.add('desc-image')
+          bgImage.style.backgroundImage = `url(${chosenCard.background})`
+          const imageCover = document.createElement('div')
 
-          const close_btn = document.createElement('div')
-          close_btn.classList.add('close-btn')
-          close_btn.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
+          const closeBtn = document.createElement('div')
+          closeBtn.classList.add('close-btn')
+          closeBtn.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 </svg>`
 
-          close_btn.addEventListener('click', function () {
+          closeBtn.addEventListener('click', function () {
             this.parentElement.parentElement.parentElement.parentElement.remove()
           })
 
-          image_cover.append(close_btn)
-          bg_image.append(image_cover)
+          imageCover.append(closeBtn)
+          bgImage.append(imageCover)
 
-          const top_info = document.createElement('div')
-          top_info.classList.add('desc-top')
+          const topInfo = document.createElement('div')
+          topInfo.classList.add('desc-top')
           const title = document.createElement('h1')
-          title.innerText = chosen_card.title
+          title.innerText = chosenCard.title
 
-          const btn_selection = document.createElement('div')
-          btn_selection.classList.add('button-selection')
-          btn_selection.innerHTML = `
-                        <div class="watch" onclick="PlayVideo('${chosen_card.show_id}');">
+          const btnSelection = document.createElement('div')
+          btnSelection.classList.add('button-selection')
+          btnSelection.innerHTML = `
+                        <div class="watch" onclick="PlayVideo('${chosenCard.show_id}');">
                             <h3>Play</h3>
                             <svg fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                 <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
                             </svg>
                         </div>
-                        <div class="queue" onclick="ToggleWatchLater('${chosen_card.title}');">
+                        <div class="queue" onclick="ToggleWatchLater('${chosenCard.title}');">
                             <h3>Watch Later</h3>
                             <svg fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -590,27 +589,27 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
                             </svg>
                         </div>`
 
-          top_info.append(title, btn_selection)
+          topInfo.append(title, btnSelection)
 
-          const mid_info = document.createElement('div')
-          mid_info.classList.add('desc-mid')
-          mid_info.innerHTML = `<p>${chosen_card.description}</p>`
+          const midInfo = document.createElement('div')
+          midInfo.classList.add('desc-mid')
+          midInfo.innerHTML = `<p>${chosenCard.description}</p>`
 
-          const bottom_info = document.createElement('div')
-          bottom_info.classList.add('desc-bottom')
+          const bottonInfo = document.createElement('div')
+          bottonInfo.classList.add('desc-bottom')
 
-          const cast_slider = document.createElement('div')
-          cast_slider.classList.add('cast')
+          const castSlider = document.createElement('div')
+          castSlider.classList.add('cast')
 
-          bottom_info.append(cast_slider)
+          bottonInfo.append(castSlider)
 
-          modal_content.append(
-            bg_image,
-            top_info,
-            mid_info,
-            bottom_info
+          modalContent.append(
+            bgImage,
+            topInfo,
+            midInfo,
+            bottonInfo
           )
-          modal.append(modal_content)
+          modal.append(modalContent)
 
           document.body.append(modal)
 
@@ -621,31 +620,31 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
           })
 
           // Set the height for the modal image
-          const total_width = document.getElementsByClassName(
+          const totalWidth = document.getElementsByClassName(
             'modal-content'
           )[0].clientWidth
-          const large_scale = (100 * total_width) / 1920
+          const largeScale = (100 * totalWidth) / 1920
           document.getElementsByClassName(
             'desc-image'
-          )[0].style.height = `${1080 * (large_scale / 100)}px`
+          )[0].style.height = `${1080 * (largeScale / 100)}px`
 
           // Set image for cast
           for (let c = 0; c < cast.length; c++) {
-            const cast_block = document.createElement('div')
-            cast_block.classList.add('cast-card')
-            cast_block.style.backgroundImage = `url("${cast[c].picture}")`
-            cast_block.style.width = 100 / cast.length - 5 + '%'
-            cast_block.style.height = `calc(${document.getElementsByClassName('cast')[0]
+            const castBlock = document.createElement('div')
+            castBlock.classList.add('cast-card')
+            castBlock.style.backgroundImage = `url("${cast[c].picture}")`
+            castBlock.style.width = 100 / cast.length - 5 + '%'
+            castBlock.style.height = `calc(${document.getElementsByClassName('cast')[0]
               .clientWidth / cast.length
               }"px" - 5%)`
-            cast_slider.append(cast_block)
+            castSlider.append(castBlock)
           }
         }
       })
 
-      button_container.append(button1, button2, button3, button4)
+      buttonContainer.append(button1, button2, button3, button4)
 
-      overlay.append(title, description, button_container)
+      overlay.append(title, description, buttonContainer)
       card.append(overlay)
 
       carousels[i].insertBefore(
@@ -656,38 +655,38 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
   }
 }
 
-const CheckCards = (carousels = DEFAULT_CAROUSELS, num_cards = NUM_CARDS.default) => {
+const CheckCards = (carousels = DEFAULT_CAROUSELS, numCards = NUM_CARDS.default) => {
   // let carousels = document.getElementsByClassName("card-carousel")
 
   for (let i = 0; i < carousels.length; i++) {
-    const carousel_width = carousels[i].clientWidth
+    const carouselWidth = carousels[i].clientWidth
 
-    const btn_width =
+    const btnWidth =
       (carousels[i].getElementsByClassName('carousel-btn')?.[0]?.clientWidth +
         carousels[i].getElementsByClassName('carousel-btn')?.[1]?.clientWidth) ?? 10
 
-    // let num_cards = NUM_CARDS.default
-    const card_margin = 2
-    const initial_width = 1920
-    const initial_height = 1080
+    // let numCards = NUM_CARDS.default
+    const cardMargin = 2
+    const initialWidth = 1920
+    const initialHeight = 1080
 
     const scale =
       (100 *
-        ((carousel_width - btn_width) / num_cards - card_margin * 2)) /
-      initial_width
+        ((carouselWidth - btnWidth) / numCards - cardMargin * 2)) /
+      initialWidth
 
     const cards = carousels[i].getElementsByClassName('card')
 
     for (let i = 0; i < cards.length; i++) {
-      cards[i].style.width = initial_width * (scale / 100) + 'px'
-      cards[i].style.height = initial_height * (scale / 100) + 'px'
-      cards[i].style.margin = `0px ${card_margin}px`
-      cards[i].style.minWidth = initial_width * (scale / 100) + 'px'
-      cards[i].style.minHeight = initial_height * (scale / 100) + 'px'
+      cards[i].style.width = initialWidth * (scale / 100) + 'px'
+      cards[i].style.height = initialHeight * (scale / 100) + 'px'
+      cards[i].style.margin = `0px ${cardMargin}px`
+      cards[i].style.minWidth = initialWidth * (scale / 100) + 'px'
+      cards[i].style.minHeight = initialHeight * (scale / 100) + 'px'
     }
 
     if (IsMobile()) {
-      carousels[i].style.height = 1.6 * (initial_height * (scale / 100)) + 'px'
+      carousels[i].style.height = 1.6 * (initialHeight * (scale / 100)) + 'px'
     } else {
       carousels[i].style.height = 'auto'
     }
@@ -732,8 +731,6 @@ const MakeJumbotron = () => {
   document.getElementsByClassName('top')[0].style.height = `${height}px`
 }
 
-const slide_index = 0
-
 const SmoothScroll = (id) => {
   const element = document.getElementById(id)
   element.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -741,51 +738,51 @@ const SmoothScroll = (id) => {
 
 const Next = (elem) => {
   const carousel = elem.parentElement.parentElement
-  const first_elem = carousel.children[1]
-  let next_elem
+  const firstElement = carousel.children[1]
+  let nextElement
 
   for (let i = 0; i < carousel.children.length; i++) {
-    if (carousel.children[i].style.display == 'none') {
-      next_elem = carousel.children[i]
+    if (carousel.children[i].style.display === 'none') {
+      nextElement = carousel.children[i]
       break
     }
   }
 
-  first_elem.style.display = 'none'
-  first_elem.remove()
+  firstElement.style.display = 'none'
+  firstElement.remove()
   carousel.insertBefore(
-    first_elem,
+    firstElement,
     carousel.children[carousel.children.length - 1]
   )
 
-  next_elem.style.display = 'flex'
+  nextElement.style.display = 'flex'
 }
 
 const Previous = (elem) => {
   const carousel = elem.parentElement.parentElement
-  let last_display_item
-  const prev_elem = carousel.children[carousel.children.length - 2]
+  let lastDisplayItem
+  const prevElement = carousel.children[carousel.children.length - 2]
 
   for (let i = 0; i < carousel.children.length; i++) {
     if (
-      carousel.children[i].style.display != 'none' &&
+      carousel.children[i].style.display !== 'none' &&
       !carousel.children[i].classList.contains('carousel-btn')
     ) {
-      last_display_item = carousel.children[i]
+      lastDisplayItem = carousel.children[i]
     }
   }
 
-  last_display_item.style.display = 'none'
+  lastDisplayItem.style.display = 'none'
 
-  carousel.insertBefore(prev_elem, carousel.children[1])
+  carousel.insertBefore(prevElement, carousel.children[1])
 
-  prev_elem.style.display = 'flex'
+  prevElement.style.display = 'flex'
 }
 
 const ToggleWatchLater = (movie = '', activate = true) => {
   const modal = document.getElementsByClassName('watch-later-modal')[0]
 
-  if (movie != '') {
+  if (movie !== '') {
     modal.getElementsByClassName('movie')[0].innerText = movie
   }
 
