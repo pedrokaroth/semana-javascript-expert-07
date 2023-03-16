@@ -1,4 +1,10 @@
-let num_cards_GLOBAL = 5
+const NUM_CARDS = {
+  default: 5,
+  tiny: 2,
+  small: 3,
+  medium: 4
+}
+
 const DEFAULT_CAROUSELS = document.getElementsByClassName('default-carousel')
 
 const cards = [
@@ -108,39 +114,40 @@ const IsMobile = () => {
   }
 }
 
-const CheckSizeAttributes = (carousels = DEFAULT_CAROUSELS) => {
+const GetCardsNumber = () => {
   const width =
     window.innerWidth ||
     document.documentElement.clientWidth ||
     document.getElementsByTagName('body')[0].clientWidth
 
-  // let carousels = document.getElementsByClassName("card-carousel")
-
-  const old_num_cards = num_cards_GLOBAL
-  let new_num_cards
-
-  if (width > 1501) {
-    new_num_cards = 5
-  } else if (width <= 1500 && width > 1100) {
-    new_num_cards = 4
-  } else if (width <= 1100 && width > 520) {
-    new_num_cards = 3
-  } else if (width <= 520) {
-    new_num_cards = 2
+  if (width <= 520) {
+    return NUM_CARDS.tiny
   }
+
+  if (width <= 1100) {
+    return NUM_CARDS.small
+  }
+
+  if (width <= 1500) {
+    return NUM_CARDS.medium
+  }
+
+  return NUM_CARDS.default
+}
+
+const CheckSizeAttributes = (carousels = DEFAULT_CAROUSELS) => {
+  NUM_CARDS.default = GetCardsNumber()
 
   for (let i = 0; i < carousels.length; i++) {
     if (carousels[i].children.length > 2) {
       for (let j = 1; j < carousels[i].children.length - 1; j++) {
         carousels[i].children[j].style.display = 'none'
       }
-      for (let j = 1; j < new_num_cards + 1; j++) {
+      for (let j = 1; j < NUM_CARDS.default + 1; j++) {
         carousels[i].children[j].style.display = 'flex'
       }
     }
   }
-
-  num_cards_GLOBAL = new_num_cards
 }
 
 const ResizeHeader = () => {
@@ -212,7 +219,7 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
     document.getElementsByClassName('carousel-btn')[0].clientWidth +
     document.getElementsByClassName('carousel-btn')[1].clientWidth
 
-  const num_cards = num_cards_GLOBAL
+  const num_cards = NUM_CARDS.default
   const card_margin = 2
   const initial_width = 1920
   const initial_height = 1080
@@ -649,7 +656,7 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
   }
 }
 
-const CheckCards = (carousels = DEFAULT_CAROUSELS, num_cards = num_cards_GLOBAL) => {
+const CheckCards = (carousels = DEFAULT_CAROUSELS, num_cards = NUM_CARDS.default) => {
   // let carousels = document.getElementsByClassName("card-carousel")
 
   for (let i = 0; i < carousels.length; i++) {
@@ -659,7 +666,7 @@ const CheckCards = (carousels = DEFAULT_CAROUSELS, num_cards = num_cards_GLOBAL)
       (carousels[i].getElementsByClassName('carousel-btn')?.[0]?.clientWidth +
         carousels[i].getElementsByClassName('carousel-btn')?.[1]?.clientWidth) ?? 10
 
-    // let num_cards = num_cards_GLOBAL
+    // let num_cards = NUM_CARDS.default
     const card_margin = 2
     const initial_width = 1920
     const initial_height = 1080
