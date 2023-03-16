@@ -2,20 +2,20 @@ import Camera from '../../../../libs/camera.js'
 
 export default class TitleView {
   #infoButtons = document.getElementsByClassName('infos')
-  #closeButton
-  #videoFrameCanvas = document.createElement('canvas')
-  #canvasContext = this.#videoFrameCanvas.getContext('2d', { willReadFrequently: true })
   #camera
 
-  isDOMLoaded () {
-    return document.readyState === 'complete'
-  }
-
   async showVideo () {
+    const imageCover = document.querySelector('.image-cover')
+
+    const video = document.createElement('div')
+    video.classList.add('video-player')
+
+    imageCover.append(video)
+
     if (!this.#camera) {
-      this.#camera = await Camera.init()
+      this.#camera = await Camera.init(video)
     } else {
-      this.#camera.play()
+      this.#camera.play(video)
     }
 
     this.configureCloseButtons()
@@ -34,10 +34,7 @@ export default class TitleView {
   }
 
   configureCloseButtons () {
-    const closeButton = document.querySelector('.close-btn')
-
-    console.log()
-
-    closeButton.addEventListener('click', this.stopVideo.bind(this))
+    document.querySelector('.close-btn')
+      .addEventListener('click', this.stopVideo.bind(this))
   }
 }

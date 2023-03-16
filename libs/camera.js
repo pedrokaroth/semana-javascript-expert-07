@@ -3,7 +3,7 @@ export default class Camera {
     this.video = document.createElement('video')
   }
 
-  async play () {
+  async play (element) {
     this.video.srcObject = await navigator.mediaDevices.getUserMedia({
       audio: false,
       video: {
@@ -23,16 +23,20 @@ export default class Camera {
     })
 
     this.video.play()
+
+    if (element) {
+      element.append(this.video)
+    }
   }
 
-  static async init () {
+  static async init (element = null) {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       throw new Error('Browser API navigator.mediaDevices.getUserMedia is not available')
     }
 
     const camera = new Camera()
 
-    await camera.play()
+    await camera.play(element)
 
     return camera
   }

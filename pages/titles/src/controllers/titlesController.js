@@ -8,14 +8,14 @@ export default class TitlesController {
     this.#view = view
     this.promise = new Promise((resolve) => {
       document.addEventListener('DOMContentLoaded', async () => {
-        await this.#sleep(1)
+        await this.#sleep(1000)
         resolve()
       })
     })
   }
 
   #sleep (s) {
-    return new Promise(resolve => setTimeout(resolve, s * 1000))
+    return new Promise(resolve => setTimeout(resolve, s))
   }
 
   async init () {

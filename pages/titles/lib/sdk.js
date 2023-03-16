@@ -313,6 +313,7 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
 </svg>`
       button4.classList.add('star')
       button4.classList.add('queue')
+      button4.classList.add('infos')
 
       button4.addEventListener('click', function () {
         if (document.getElementsByClassName('movie-desc').length > 0) {
@@ -327,8 +328,9 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
 
           const bgImage = document.createElement('div')
           bgImage.classList.add('desc-image')
-          bgImage.style.backgroundImage = `url(${chosenCard.background})`
+
           const imageCover = document.createElement('div')
+          imageCover.classList.add('image-cover')
 
           const closeBtn = document.createElement('div')
           closeBtn.classList.add('close-btn')
@@ -656,8 +658,6 @@ const AddBrowseSearchCards = ({ cards, itemsPerLine }) => {
 }
 
 const CheckCards = (carousels = DEFAULT_CAROUSELS, numCards = NUM_CARDS.default) => {
-  // let carousels = document.getElementsByClassName("card-carousel")
-
   for (let i = 0; i < carousels.length; i++) {
     const carouselWidth = carousels[i].clientWidth
 
