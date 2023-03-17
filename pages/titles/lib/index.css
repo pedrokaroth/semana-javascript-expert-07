@@ -446,7 +446,7 @@ a {
     z-index: 1;
 }
 
-.movie-desc {
+.movie-desc, .movie-player {
     position: fixed;
     left: 0;
     top: 0;
@@ -459,6 +459,15 @@ a {
     z-index: 10;
 
     padding: 50px 0px;
+}
+
+.movie-player {
+    padding: 0;
+    height: 100%!important;
+}
+
+.modal-player {
+    max-width: none!important;
 }
 
 .modal-content {

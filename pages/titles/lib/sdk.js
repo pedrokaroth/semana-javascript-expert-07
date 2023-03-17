@@ -210,6 +210,20 @@ const ResizeHeader = () => {
   }
 }
 
+const CreateCloseModalBtn = () => {
+  const closeBtn = document.createElement('div')
+  closeBtn.classList.add('close-btn')
+  closeBtn.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>`
+
+  closeBtn.addEventListener('click', function () {
+    this.parentElement.parentElement.parentElement.parentElement.remove()
+  })
+
+  return closeBtn
+}
+
 const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
   const carouselWidth = carousels[0]
     .clientWidth
@@ -278,7 +292,38 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
 </svg>`
       button1.classList.add('watch')
 
-      button1.addEventListener('click', function () { PlayVideo('00') })
+      button1.addEventListener('click', function () {
+        if (document.getElementsByClassName('movie-player').length > 0) {
+          console.log('fechando')
+          document.getElementsByClassName('movie-player')[0].remove()
+        } else {
+          console.log('abrinddo')
+          const modal = document.createElement('div')
+          modal.classList.add('movie-player')
+
+          const modalContent = document.createElement('div')
+          modalContent.classList.add('modal-content')
+          modalContent.classList.add('modal-player')
+
+          const bgImage = document.createElement('div')
+          bgImage.classList.add('desc-image')
+
+          const imageCover = document.createElement('div')
+          imageCover.classList.add('image-cover')
+
+          const closeBtn = CreateCloseModalBtn()
+
+          imageCover.append(closeBtn)
+          bgImage.append(imageCover)
+
+          modalContent.append(
+            bgImage
+          )
+          modal.append(modalContent)
+
+          document.body.append(modal)
+        }
+      })
 
       const button2 = document.createElement('div')
       button2.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
@@ -332,15 +377,7 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
           const imageCover = document.createElement('div')
           imageCover.classList.add('image-cover')
 
-          const closeBtn = document.createElement('div')
-          closeBtn.classList.add('close-btn')
-          closeBtn.innerHTML = `<svg fill="currentColor" viewBox="0 0 16 16">
-  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-</svg>`
-
-          closeBtn.addEventListener('click', function () {
-            this.parentElement.parentElement.parentElement.parentElement.remove()
-          })
+          const closeBtn = CreateCloseModalBtn()
 
           imageCover.append(closeBtn)
           bgImage.append(imageCover)
