@@ -218,7 +218,9 @@ const CreateCloseModalBtn = () => {
                         </svg>`
 
   closeBtn.addEventListener('click', function () {
-    this.parentElement.parentElement.parentElement.parentElement.remove()
+    const modal = this.parentElement.parentElement.parentElement.parentElement
+    modal.classList.remove('show-modal')
+    setTimeout(() => modal.remove(), 100)
   })
 
   return closeBtn
@@ -319,9 +321,14 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
           modalContent.append(
             bgImage
           )
+
           modal.append(modalContent)
 
           document.body.append(modal)
+
+          setTimeout(() => {
+            modal.classList.add('show-modal')
+          }, 10)
         }
       })
 
@@ -429,11 +436,9 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
 
           document.body.append(modal)
 
-          document.body.addEventListener('click', function (event) {
-            if (!event.target.classList.contains('modal-content')) {
-              // modal.remove();
-            }
-          })
+          setTimeout(() => {
+            modal.classList.add('show-modal')
+          }, 10)
 
           // Set the height for the modal image
           const totalWidth = document.getElementsByClassName(
