@@ -2,10 +2,11 @@ import Camera from '../../../../libs/camera.js'
 
 export default class TitleView {
   #infoButtons = document.getElementsByClassName('infos')
+  #playButtons = document.getElementsByClassName('watch')
   #camera
 
-  async showVideo () {
-    const imageCover = document.querySelector('.image-cover')
+  async showVideo (className) {
+    const imageCover = document.querySelector(`.${className}`)
 
     const video = document.createElement('div')
     video.classList.add('video-player')
@@ -29,7 +30,13 @@ export default class TitleView {
 
   configureTitleVideo () {
     Array.from(this.#infoButtons).forEach(element => {
-      element.addEventListener('click', this.showVideo.bind(this))
+      element.addEventListener('click', this.showVideo.bind(this, 'image-cover'))
+    })
+  }
+
+  configurePlayVideo () {
+    Array.from(this.#playButtons).forEach(element => {
+      element.addEventListener('click', this.showVideo.bind(this, 'modal-player'))
     })
   }
 

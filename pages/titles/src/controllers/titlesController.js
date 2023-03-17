@@ -21,6 +21,7 @@ export default class TitlesController {
   async init () {
     await this.promise
     this.#view.configureTitleVideo()
+    this.#view.configurePlayVideo()
   }
 
   static async initialize (deps) {
