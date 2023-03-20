@@ -299,7 +299,6 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
           console.log('fechando')
           document.getElementsByClassName('movie-player')[0].remove()
         } else {
-          console.log('abrinddo')
           const modal = document.createElement('div')
           modal.classList.add('movie-player')
 
