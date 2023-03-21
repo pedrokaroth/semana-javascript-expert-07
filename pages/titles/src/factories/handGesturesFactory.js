@@ -12,16 +12,24 @@ import 'https://cdn.jsdelivr.net/npm/fingerpose@0.1.0/dist/fingerpose.min.js'
 import Camera from '../../../../libs/camera.js'
 import gestures from '../utils/gestures.js'
 
+const {
+  knownGestures,
+  gestureStrings,
+  fingerLookupIndexes
+} = gestures.getGestures(window.fp)
+
 const factory = {
   async initialize () {
     return HandGesturesController.initialize({
       camera: await Camera.init(document.body),
-      view: new HandGesturesView(),
+      view: new HandGesturesView({
+        fingerLookupIndexes
+      }),
       service: new HandGesturesService({
         fingerPose: window.fp,
         handPoseDetection: window.handPoseDetection,
         handVersion: window.VERSION,
-        gestures: gestures.getGestures(window.fp)
+        gestures: { knownGestures, gestureStrings }
       })
     })
   }
