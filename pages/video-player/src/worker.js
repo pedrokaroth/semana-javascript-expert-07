@@ -14,9 +14,7 @@ const service = new Service({
   tf
 })
 
-console.log('Loading TF model')
 await service.loadModel()
-console.log('Loaded TF model')
 
 postMessage({ model: 'loaded' })
 

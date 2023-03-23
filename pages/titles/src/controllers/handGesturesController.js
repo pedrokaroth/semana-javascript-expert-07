@@ -18,7 +18,6 @@ export default class HandGesturesController {
   }
 
   async init () {
-    console.log('iniciando validacao de gestos')
     return this.#loop()
   }
 
@@ -60,7 +59,6 @@ export default class HandGesturesController {
       this.#view.drawHands(hands)
 
       for await (const { event, x, y } of this.#service.detectGestures(hands)) {
-        console.log(event)
         if (event === 'click' && shouldClick()) {
           this.#view.handClickEvent(x, y)
           continue

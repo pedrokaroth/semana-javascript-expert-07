@@ -12,6 +12,8 @@ import 'https://cdn.jsdelivr.net/npm/fingerpose@0.1.0/dist/fingerpose.min.js'
 import Camera from '../../../../libs/camera.js'
 import gestures from '../utils/gestures.js'
 
+const styler = new PseudoStyler()
+
 const {
   knownGestures,
   gestureStrings,
@@ -23,7 +25,8 @@ const factory = {
     return HandGesturesController.initialize({
       camera: await Camera.init(document.body),
       view: new HandGesturesView({
-        fingerLookupIndexes
+        fingerLookupIndexes,
+        styler
       }),
       service: new HandGesturesService({
         fingerPose: window.fp,

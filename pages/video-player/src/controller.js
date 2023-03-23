@@ -29,7 +29,6 @@ export default class Controller {
     const image = this.#view.getVideoFrame(video)
 
     this.#worker.send(image)
-    console.log(new Date().toDateString())
     setTimeout(() => this.loop(), 50)
   }
 
@@ -52,14 +51,11 @@ export default class Controller {
         ready = true
         return this.#view.buttonDisabled(false)
       }
-      console.log(data)
 
       if (data.blinked) {
         this.#view.togglePlayVideo()
         return this.log(`Blinked at ${date()}`)
       }
-
-      console.log(data)
     }
 
     return {

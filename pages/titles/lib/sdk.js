@@ -296,7 +296,6 @@ const AddDefaultCards = (carousels = DEFAULT_CAROUSELS) => {
 
       button1.addEventListener('click', function () {
         if (document.getElementsByClassName('movie-player').length > 0) {
-          console.log('fechando')
           document.getElementsByClassName('movie-player')[0].remove()
         } else {
           const modal = document.createElement('div')
